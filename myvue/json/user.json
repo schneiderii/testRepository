@@ -1,0 +1,11 @@
+[{
+	"userNo": 1,
+	"userName": "张三",
+	"myDate": "2020-02-05",
+	"userMoney": 100.00
+}, {
+	"userNo": 2,
+	"userName": "李四",
+	"myDate": "2020-02-08",
+	"userMoney": 200.00
+}]

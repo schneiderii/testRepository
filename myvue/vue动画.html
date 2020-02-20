@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			/* 所有动画样式名称都是vue框架中定义好的 */
+			/* .v-enter动画开始之前的样式，.v-leave-to动画结束之后的样式 */
+			.v-enter,
+			.v-leave-to {
+				opacity: 0;
+				transform: translate(100px, 0);
+			}
+
+			/* 定义动画开始后和结束后的样式 */
+			.v-enter-active,
+			.v-leave-active {
+				transition: all 0.8s ease-in-out;
+			}
+
+			/* 样式名称的前置可以通过transition标签中的name属性自定义，这里定义了my */
+			.my-enter,
+			.my-leave-to {
+				opacity: 0;
+				transform: translate(0, 100px);
+			}
+
+			/* 定义动画开始后和结束后的样式 */
+			.my-enter-active,
+			.my-leave-active {
+				transition: all 0.8s ease-in-out;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			ul li {
+				border: 1px solid black;
+				list-style: none;
+			}
+
+			ul li:hover {
+				background-color: hotpink;
+			}
+
+			/* 样式名称的前置可以通过transition标签中的name属性自定义，这里定义了my */
+			.myLI-enter,
+			.myLI-leave-to {
+				opacity: 0;
+				transform: translate(100px, 0);
+			}
+
+			/* 定义动画开始后和结束后的样式 */
+			.myLI-enter-active,
+			.myLI-leave-active {
+				transition: all 0.3s ease-in-out;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<input type="button" name="" value="切换" @click="flag=!flag" />
+
+			<!-- 需要动画的标签使用transition标签包含 -->
+			<transition>
+				<h1 v-if="flag">动画示例标题</h1>
+			</transition>
+
+			<input type="button" name="" value="切换2" @click="flag2=!flag2" />
+
+			<!-- 需要动画的标签使用transition标签包含，name属性中的值可以自定义样式名称前置 -->
+			<transition name="my">
+				<h1 v-if="flag2">动画示例标题2</h1>
+			</transition>
+
+			<hr>
+
+			编号：<input type="text" v-model="id" />
+			姓名：<input type="text" v-model="name" />
+			<input type="button" value="添加" @click="add()" />
+
+			<!-- 使用列表循环显示动画，要使用transition-group标签，appear属性为页面加载时此类别有默认动画效果 -->
+			<!-- 注意，如果是v-for循环，必须设置:key属性，否则列表出不来 -->
+			<transition-group name="myLI" appear="true">
+				<ul v-for="(item,index) in list" :key="item.id" @click="del(index)">
+					<li>{{item.id}}------{{item.name}}</li>
+				</ul>
+			</transition-group>
+
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: "#app",
+			data: {
+				flag: true,
+				flag2: true,
+				id: "",
+				name: "",
+
+				list: [{
+						id: 1,
+						name: "张三"
+					},
+					{
+						id: 2,
+						name: "李四"
+					},
+					{
+						id: 3,
+						name: "王小二"
+					}
+				]
+			},
+			methods: {
+				add() {
+					var newObj = {
+						id: this.id,
+						name: this.name
+					};
+					this.list.push(newObj);
+				},
+				del(index) {
+					this.list.splice(index, 1);
+				}
+			}
+		})
+	</script>
+</html>

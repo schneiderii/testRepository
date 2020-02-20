@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<!-- 加载vue和vue-router脚本库 -->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- url地址中使用传统方式传参 -->
+			<router-link to="/login?id=1001&name=张三">登录</router-link>
+			<!-- url地址中使用占位符形式传参（类似REST风格） -->
+			<router-link to="/register/1002/李四">注册</router-link>
+
+			<!-- 路由展示标签 -->
+			<router-view></router-view>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		// 定义路由组件对象
+		var login = {
+			// 获取路由参数方法1：url地址中使用传统方式传参，使用$route.query.参数名获取值
+			template: "<h1>登录模块 id={{$route.query.id}}  name={{$route.query.name}}</h1>"
+		}
+		var register = {
+			// 获取路由参数方法2：url地址中使用占位符形式传参（类似REST风格），使用$route.params.参数名获取值
+			template: "<h1>注册模块 id={{$route.params.id}}  name={{$route.params.name}}</h1>"
+		}
+
+		// 定义路由对象
+		var routerObj = new VueRouter({
+			// 定义路由规则，path路由路径，component路由组件对象
+			routes: [{
+				path: "/login",
+				component: login
+			}, {
+				// url地址中使用占位符形式传参（类似REST风格）
+				path: "/register/:id/:name",
+				component: register
+			}]
+		})
+
+		var vue = new Vue({
+			el: "#app",
+			data: {
+
+			},
+			methods: {
+
+			},
+			router: routerObj //把路由对象关联到Vue
+		})
+	</script>
+</html>

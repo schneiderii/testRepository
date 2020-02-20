@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 加载发表评论组件 -->
+			<pinglun-com @func="loadComment"></pinglun-com>
+
+			<div id="pinglunDiv">
+				<ul>
+					<li v-for="item in list" :key="item.id">
+						{{item.content}}
+						{{item.user}}
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<template id="pinglunCom">
+			<div>
+				评论人：<input type="text" v-model="user" />
+				内容：<textarea v-model="content"></textarea>
+				<input type="button" value="发表" @click="pub()" />
+			</div>
+		</template>
+	</body>
+
+	<script type="text/javascript">
+		// 创建组件
+		var pinglunCom = {
+			template: "#pinglunCom",
+			data: function() {
+				return {
+					user: "",
+					content: ""
+				}
+			},
+			methods: {
+				pub() {
+					var newComment = {
+						id: Date.now(),
+						user: this.user,
+						content: this.content
+					};
+
+					var list = JSON.parse(localStorage.getItem("commentList")||"[]");
+					list.unshift(newComment);
+
+					localStorage.setItem("commentList", JSON.stringify(list));
+
+					this.user = this.content = "";
+					
+					//触发父组件的自定义函数
+					this.$emit("func");
+				}
+			}
+		}
+
+		var vue = new Vue({
+			el: "#app",
+			data: {
+				list: [{
+						id: Date.now(),
+						user: "张三",
+						content: "白日依山尽"
+					},
+					{
+						id: Date.now(),
+						user: "李四",
+						content: "黄河入海流"
+					},
+					{
+						id: Date.now(),
+						user: "王小二",
+						content: "欲穷千里目"
+					}
+				]
+			},
+			methods: {
+				loadComment() {
+					var list = JSON.parse(localStorage.getItem("commentList")||"[]");
+					this.list = list;
+				}
+			},
+			created() {
+				this.loadComment();
+			},
+			components: {
+				'pinglunCom': pinglunCom
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<script type="text/javascript">
+			// var str = 'window';
+
+			// const obj = {
+			// 	str: 'obj',
+			// 	fn: () => {
+			// 		console.log(this.str);
+			// 	},
+			// 	fn2: function() {
+			// 		console.log(this.str, '当前词法作用域中的this')
+			// 		return {
+			// 			str: 'newObj',
+			// 			fn3: () => {
+			// 				console.log(this.str);
+			// 			}
+			// 		}
+			// 	}
+			// }
+
+			// obj.fn();
+			// var newObj = obj.fn2();
+			// newObj.fn3();
+
+			// var a = 11;
+			// function test2() {
+			// 	var a = 22;
+			// 	let b = () => {
+			// 		console.log(this.a)
+			// 	}
+			// 	b();
+			// }
+			// var x = new test2();
+
+			//如果箭头函数被非箭头函数包含,则this绑定指向的是最近一层非箭头函数的this;否则this的值会被设置为全局对象
+			var birth = 1980;
+			var obj = {
+				birth: 1990,
+				getAge: function() {
+					//这里的箭头函数被普通函数包含，因此this指向obj2对象
+					var fn = () => 2020 - this.birth;
+					return fn();
+				},
+				getAge2: () => {
+					//这里的箭头函数没有被普通函数包含，因此this指向全局对象
+					var fn = () => 2020 - this.birth;
+					return fn();
+				},
+
+			};
+
+			console.log(obj.getAge());//输出30
+			console.log(obj.getAge2());//输出40
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

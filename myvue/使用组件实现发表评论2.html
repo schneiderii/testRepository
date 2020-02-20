@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 加载发表评论组件 -->
+			<pinglun-com></pinglun-com>
+		</div>
+
+		<template id="pinglunCom">
+			<div>
+				评论人：<input type="text" v-model="user" />
+				内容：<textarea v-model="content"></textarea>
+				<input type="button" value="发表" @click="pub()" />
+				
+				<ul>
+					<li v-for="item in list" :key="item.id">
+						{{item.content}}
+						{{item.user}}
+					</li>
+				</ul>
+			</div>
+		</template>
+	</body>
+
+	<script type="text/javascript">
+		// 创建评论组件
+		var pinglunCom = {
+			template: "#pinglunCom",
+			data: function() {
+				return {
+					user: "",
+					content: "",
+					list: [{
+							id: Date.now(),
+							user: "张三",
+							content: "白日依山尽"
+						},
+						{
+							id: Date.now(),
+							user: "李四",
+							content: "黄河入海流"
+						},
+						{
+							id: Date.now(),
+							user: "王小二",
+							content: "欲穷千里目"
+						}
+					]
+				}
+			},
+			methods: {
+				pub() {
+					var newComment = {
+						id: Date.now(),
+						user: this.user,
+						content: this.content
+					};
+					this.list.unshift(newComment);
+			
+					this.user = this.content = "";
+				}
+			}
+		}
+
+		var vue = new Vue({
+			el: "#app",
+			data: {
+
+			},
+			methods: {
+			},
+			created() {
+			},
+			components: {
+				'pinglunCom': pinglunCom
+			}
+		})
+	</script>
+</html>

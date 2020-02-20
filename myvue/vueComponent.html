@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 引用组件名称如果有驼峰规则，把大写字母改成小写，同时两个单词之间用-分割 -->
+			<my-com1></my-com1>
+			<my-com2></my-com2>
+		</div>
+
+		<template id="app2">
+			<div id="">
+				<p>段落2</p>
+				<h1>这是vue创建的组件标签2</h1>
+				<input type="button" name="" value="+1" @click="add()"  />
+				<p>{{num}}</p>
+			</div>
+		</template>
+	</body>
+
+	<script type="text/javascript">
+		// 创建组件，创建的组件名称如果有驼峰规则，把大写字母改成小写，同时两个单词之间用-分割
+		// 注意：组件创建的html标签有且只能有一个根标签
+		Vue.component("myCom1", Vue.extend({
+			template: "<div><p>段落</p><h1>这是vue创建的组件标签</h1></div>",
+
+		}));
+
+		Vue.component("myCom2", Vue.extend({
+			template: "#app2",
+			//组件中的data必须是一个函数，而且返回值是一个对象
+			data: function() {
+				return {
+					num: 0
+				}
+			},
+			methods:{
+				add(){
+					this.num++;
+				}
+			}
+		}));
+
+		var vue = new Vue({
+			el: "#app",
+			data: {
+
+			},
+			methods: {
+
+			}
+		})
+	</script>
+</html>

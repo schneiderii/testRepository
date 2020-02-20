@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<script type="text/javascript">
+			//ES6，方法的参数带默认值
+			function fun(param = 22) {
+				let p = param || "hello";
+				return p;
+			}
+			console.log(fun());
+
+			//REST参数（剩余参数）
+			function fun2(a, b, ...param) {
+				console.log(a);
+				console.log(b);
+				console.log(param); //...param会作为一个数组输出
+			}
+			fun2(1, 2, 3, 4, 5);
+
+			//箭头函数
+			let arr = [11, 22, 33, 44];
+			// arr.forEach(function(e, i) {
+			// 	console.log(e, i);
+			// })
+			arr.forEach((e, i) => {
+				console.log(e, i);
+			})
+
+			//注意：箭头函数中的this取决于函数的定义，而不是调用
+			var num = 99; //全局变量
+			var obj = {
+				num: 88,
+				fun3: () => {
+					console.log(this.num);
+					
+					return {
+						num: 77,
+						fun4: function() {
+							console.log(this.num);
+						}
+					}
+				}
+			}
+			obj.fun3();
+			var obj2 = obj.fun3();
+			obj2.fun4();
+		</script>
+	</head>
+
+	<body>
+	</body>
+</html>
